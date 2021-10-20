@@ -15,10 +15,10 @@ public class FindCelebrity {
 
         people.forEach(System.out::println);
 
-        AtomicInteger position = isThereCelebrity(people);
+        int position = isCelebrity(people);
 
-        if (position.get() != 0) {
-            System.out.println("Celebrity found in position: " + position.get());
+        if (position != 0) {
+            System.out.println("Celebrity found in position: " + position);
         } else {
             System.out.println("Celebrity not found");
         }
@@ -30,9 +30,9 @@ public class FindCelebrity {
      * @param people List of people to be iterated
      * @return Zero if the list is empty or there is no celebrity, else the position of the celebrity.
      */
-    public static AtomicInteger isThereCelebrity(List<List<Person>> people) {
+    public static int isCelebrity(List<List<Person>> people) {
+        AtomicInteger celebrityPosition = new AtomicInteger(0);
         if (!people.isEmpty()) {
-            AtomicInteger celebrityPosition = new AtomicInteger(0);
             people.forEach(
                     p -> {
                         if (knowsNoOne(p) == p.size()) {
@@ -40,10 +40,11 @@ public class FindCelebrity {
                         }
                     }
             );
-            return celebrityPosition;
+            people.remove(people.get(celebrityPosition.get()));
+            if (everyoneKnowsCeleb(people, celebrityPosition.get())) return celebrityPosition.get();
         }
 
-        return new AtomicInteger(0);
+        return 0;
     }
 
 
@@ -73,5 +74,15 @@ public class FindCelebrity {
      */
     public static int knowsNoOne(List<Person> list) {
         return Collections.frequency(list, new Person(0));
+    }
+
+    public static boolean everyoneKnowsCeleb(List<List<Person>> list, int celebrity) {
+        boolean knowsCeleb = false;
+        Person person = new Person(1);
+        for (List<Person> p: list) {
+            knowsCeleb = p.get(celebrity).equals(person);
+        }
+
+        return knowsCeleb;
     }
 }

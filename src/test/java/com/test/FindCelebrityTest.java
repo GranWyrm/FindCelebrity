@@ -12,12 +12,12 @@ class FindCelebrityTest {
 
     @Test
     void testCelebrityFound() {
-        assertEquals(2,FindCelebrity.isThereCelebrity(fillOneCelebrity()).get());
+        assertEquals(2,FindCelebrity.isCelebrity(fillOneCelebrity()));
     }
 
     @Test
     void testPeopleEmpty() {
-        assertEquals(0, FindCelebrity.isThereCelebrity(new ArrayList<>()).get());
+        assertEquals(0, FindCelebrity.isCelebrity(new ArrayList<>()));
     }
 
     @Test
@@ -28,6 +28,12 @@ class FindCelebrityTest {
     @Test
     void testFalseKnowsNoOne() {
         assertNotEquals(0, FindCelebrity.knowsNoOne(fillOnePeoplesNotZeros()));
+    }
+
+    @Test
+    void testEveryoneKnowsCeleb() {
+        boolean knowsCeleb = FindCelebrity.everyoneKnowsCeleb(fillOneCelebrity(), 2);
+        assertTrue(knowsCeleb);
     }
 
     private List<Person> fillOnePeoplesZeros() {
