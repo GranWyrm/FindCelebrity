@@ -36,6 +36,11 @@ class FindCelebrityTest {
         assertTrue(knowsCeleb);
     }
 
+    @Test
+    void testAlmostCelebrity() {
+        assertNotEquals(2,FindCelebrity.isCelebrity(almostCelebrity()));
+    }
+
     private List<Person> fillOnePeoplesZeros() {
         return Arrays.asList(
                 new Person(0),
@@ -84,4 +89,35 @@ class FindCelebrityTest {
         return people;
     }
 
+    private  List<List<Person>> almostCelebrity() {
+        List<List<Person>> people = new ArrayList<>();
+        List<Person> personList1 = Arrays.asList(
+                new Person(0),
+                new Person(0),
+                new Person(1),
+                new Person(0));
+        people.add(personList1);
+
+        List<Person> personList2 = Arrays.asList(
+                new Person(0),
+                new Person(0),
+                new Person(1),
+                new Person(0));
+        people.add(personList2);
+
+        List<Person> personList3 = Arrays.asList(
+                new Person(0),
+                new Person(0),
+                new Person(0),
+                new Person(0));
+        people.add(personList3);
+
+        List<Person> personList4 = Arrays.asList(
+                new Person(0),
+                new Person(1),
+                new Person(0),
+                new Person(0));
+        people.add(personList4);
+        return people;
+    }
 }
