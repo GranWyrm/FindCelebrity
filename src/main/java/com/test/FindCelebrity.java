@@ -24,22 +24,34 @@ public class FindCelebrity {
         }
     }
 
+    /**
+     * determines if there is a celebrity in the list, only lists with all elements value
+     * as zero are celebrities.
+     * @param people List of people to be iterated
+     * @return Zero if the list is empty or there is no celebrity, else the position of the celebrity.
+     */
     public static AtomicInteger isThereCelebrity(List<List<Person>> people) {
-        if (people.isEmpty()) {
-            return new AtomicInteger(0);
-        }
-        AtomicInteger celebrityPosition = new AtomicInteger(0);
-        people.forEach(
-                p -> {
-                    if (knowsNoOne(p) == p.size()) {
-                        celebrityPosition.set(people.indexOf(p));
+        if (!people.isEmpty()) {
+            AtomicInteger celebrityPosition = new AtomicInteger(0);
+            people.forEach(
+                    p -> {
+                        if (knowsNoOne(p) == p.size()) {
+                            celebrityPosition.set(people.indexOf(p));
+                        }
                     }
-                }
-        );
+            );
+            return celebrityPosition;
+        }
 
-        return celebrityPosition;
+        return new AtomicInteger(0);
     }
 
+
+    /**
+     * Helper method to fill list of person objects with a defined size, works only for square lists.
+     * @param people List to be filled.
+     * @param size Desired size of the list.
+     */
     public static void fillArray(List<List<Person>> people, int size) {
 
         IntStream.range(0, size)
@@ -52,6 +64,13 @@ public class FindCelebrity {
         );
     }
 
+    /**
+     * Helper method to see if a person know someone in a list of persons.
+     * If the frequency of zeros in a list of persons is different from the size of
+     * the list, it means the person knows at least one other person.
+     * @param list List of person objects.
+     * @return The frequency of the zero in the list
+     */
     public static int knowsNoOne(List<Person> list) {
         return Collections.frequency(list, new Person(0));
     }
